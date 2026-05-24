@@ -4,45 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>CloseCrab Web</title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>CloseCrab</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css">
 </head>
 <body>
   <div id="app">
-    <header id="header">
-      <h1>CloseCrab</h1>
-      <div id="status-bar">
-        <span id="connection-status" class="status-dot offline"></span>
-        <span id="status-text">Disconnected</span>
+    <!-- Sessions View -->
+    <div id="view-sessions">
+      <div class="nav-bar">
+        <h1>CloseCrab</h1>
+        <div id="server-status" class="badge badge-offline">Offline</div>
       </div>
-      <button id="btn-new" onclick="createSession()">+ New</button>
-    </header>
-
-    <div id="sessions-panel">
-      <div id="sessions-list"></div>
+      <div id="sessions-list" class="content"></div>
+      <div class="bottom-bar">
+        <button class="btn-primary" onclick="showNewSession()">New Session</button>
+      </div>
     </div>
 
-    <div id="terminal-container" style="display:none;">
-      <div id="terminal-header">
-        <button id="btn-back" onclick="showSessions()">&larr;</button>
-        <span id="terminal-title">Session</span>
-        <button id="btn-kill" onclick="killSession()">Kill</button>
+    <!-- New Session View -->
+    <div id="view-new" style="display:none;">
+      <div class="nav-bar">
+        <button class="btn-back" onclick="showView('sessions')">&larr;</button>
+        <h1>New Session</h1>
       </div>
-      <div id="terminal"></div>
-      <div id="quick-keys">
-        <button onclick="sendKey('\x03')">Ctrl+C</button>
-        <button onclick="sendKey('\t')">Tab</button>
-        <button onclick="sendKey('\x1b')">Esc</button>
-        <button onclick="sendKey('\r')">Enter</button>
-        <button onclick="sendKey('\x1a')">Ctrl+Z</button>
-        <button onclick="sendKey('/help\r')">/help</button>
+      <div class="content form-content">
+        <label>Working Directory <span class="hint">(optional)</span></label>
+        <input type="text" id="input-dir" placeholder="Leave empty for default" autocomplete="off">
+        <p class="hint-text">CloseCrab will use the config already set up on this PC.</p>
+        <button class="btn-primary" onclick="doCreateSession()">Start</button>
+      </div>
+    </div>
+
+    <!-- Terminal View -->
+    <div id="view-terminal" style="display:none;">
+      <div class="nav-bar">
+        <button class="btn-back" onclick="leaveTerminal()">&larr;</button>
+        <div class="nav-center">
+          <span id="term-title">CloseCrab</span>
+          <div id="term-status" class="badge badge-connecting">Connecting</div>
+        </div>
+        <button class="btn-icon btn-danger" onclick="killSession()" title="Kill">&#x2715;</button>
+      </div>
+
+      <!-- Loading with Snake game -->
+      <div id="loading-screen">
+        <div id="loading-status">Launching CloseCrab...</div>
+        <canvas id="snake-canvas"></canvas>
+        <p class="game-hint">Swipe or use buttons to play Snake</p>
+        <div id="snake-controls">
+          <button ontouchstart="snakeDir('up')">&#x25B2;</button>
+          <div>
+            <button ontouchstart="snakeDir('left')">&#x25C0;</button>
+            <button ontouchstart="snakeDir('right')">&#x25B6;</button>
+          </div>
+          <button ontouchstart="snakeDir('down')">&#x25BC;</button>
+        </div>
+        <button id="btn-enter" class="btn-primary" style="display:none;" onclick="enterTerminal()">Enter Terminal &rarr;</button>
+      </div>
+
+      <!-- Terminal output -->
+      <div id="terminal-area" style="display:none;">
+        <div id="term-output"></div>
+        <div id="quick-bar">
+          <button onclick="sendKey('\x03')">^C</button>
+          <button onclick="sendKey('\t')">Tab</button>
+          <button onclick="sendKey('\x1b')">Esc</button>
+          <button onclick="sendKey('\x1a')">^Z</button>
+          <button onclick="sendKey('/help\r')">/help</button>
+          <button onclick="sendKey('y\r')">Yes</button>
+        </div>
+        <div id="input-bar">
+          <input type="text" id="msg-input" placeholder="Type here..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <button id="btn-send" onclick="sendMessage()">&#x2191;</button>
+        </div>
       </div>
     </div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
