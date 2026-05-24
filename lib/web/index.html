@@ -28,7 +28,8 @@
         <button class="btn-back" onclick="showView('sessions')">&larr;</button>
         <h1>New Session</h1>
       </div>
-      <div class="content form-content">
+      <div class="content form-content new-session-content">
+        <div class="logo-watermark" aria-hidden="true"></div>
         <label>Working Directory <span class="hint">(optional)</span></label>
         <input type="text" id="input-dir" placeholder="Leave empty for default" autocomplete="off">
         <p class="hint-text">CloseCrab will use the config already set up on this PC.</p>
@@ -66,6 +67,12 @@
       <!-- Terminal output -->
       <div id="terminal-area" style="display:none;">
         <div id="term-output"></div>
+        <div id="thinking-bar" style="display:none;">
+          <div class="wave">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span id="thinking-label">Thinking</span>
+        </div>
         <div id="quick-bar">
           <button onclick="sendKey('\x03')">^C</button>
           <button onclick="sendKey('\t')">Tab</button>
