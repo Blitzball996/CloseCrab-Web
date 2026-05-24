@@ -1,0 +1,31 @@
+{
+  "name": "closecrab-web",
+  "version": "0.1.0",
+  "description": "Mobile-friendly Web interface for CloseCrab-Unified remote control",
+  "main": "lib/server.js",
+  "bin": {
+    "closecrab-web": "bin/cli.js"
+  },
+  "scripts": {
+    "start": "node bin/cli.js",
+    "dev": "node bin/cli.js --port 3000"
+  },
+  "keywords": ["closecrab", "remote-control", "terminal", "web-ui", "ai-coding"],
+  "author": "Blitzball996",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blitzball996/CloseCrab-Web.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "ws": "^8.19.0",
+    "node-pty": "npm:@lydell/node-pty@^1.1.0",
+    "commander": "^11.0.0",
+    "uuid": "^9.0.0",
+    "yaml": "^2.3.4"
+  }
+}

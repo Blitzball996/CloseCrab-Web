@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>CloseCrab Web</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <h1>CloseCrab</h1>
+      <div id="status-bar">
+        <span id="connection-status" class="status-dot offline"></span>
+        <span id="status-text">Disconnected</span>
+      </div>
+      <button id="btn-new" onclick="createSession()">+ New</button>
+    </header>
+
+    <div id="sessions-panel">
+      <div id="sessions-list"></div>
+    </div>
+
+    <div id="terminal-container" style="display:none;">
+      <div id="terminal-header">
+        <button id="btn-back" onclick="showSessions()">&larr;</button>
+        <span id="terminal-title">Session</span>
+        <button id="btn-kill" onclick="killSession()">Kill</button>
+      </div>
+      <div id="terminal"></div>
+      <div id="quick-keys">
+        <button onclick="sendKey('\x03')">Ctrl+C</button>
+        <button onclick="sendKey('\t')">Tab</button>
+        <button onclick="sendKey('\x1b')">Esc</button>
+        <button onclick="sendKey('\r')">Enter</button>
+        <button onclick="sendKey('\x1a')">Ctrl+Z</button>
+        <button onclick="sendKey('/help\r')">/help</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
