@@ -16,7 +16,7 @@
         <h1>CloseCrab</h1>
         <div id="server-status" class="badge badge-offline">Offline</div>
       </div>
-      <div id="sessions-list" class="content"></div>
+      <div id="sessions-list" class="content sessions-content"></div>
       <div class="bottom-bar">
         <button class="btn-primary" onclick="showNewSession()">New Session</button>
       </div>
@@ -48,19 +48,12 @@
         <button class="btn-icon btn-danger" onclick="killSession()" title="Kill">&#x2715;</button>
       </div>
 
-      <!-- Loading with Snake game -->
+      <!-- Loading with random mini-game -->
       <div id="loading-screen">
         <div id="loading-status">Launching CloseCrab...</div>
-        <canvas id="snake-canvas"></canvas>
-        <p class="game-hint">Swipe or use buttons to play Snake</p>
-        <div id="snake-controls">
-          <button ontouchstart="snakeDir('up')">&#x25B2;</button>
-          <div>
-            <button ontouchstart="snakeDir('left')">&#x25C0;</button>
-            <button ontouchstart="snakeDir('right')">&#x25B6;</button>
-          </div>
-          <button ontouchstart="snakeDir('down')">&#x25BC;</button>
-        </div>
+        <canvas id="game-canvas"></canvas>
+        <p class="game-hint" id="game-hint">Loading game...</p>
+        <div id="game-controls"></div>
         <button id="btn-enter" class="btn-primary" style="display:none;" onclick="enterTerminal()">Enter Terminal &rarr;</button>
       </div>
 
@@ -88,6 +81,7 @@
       </div>
     </div>
   </div>
+  <script src="games.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
