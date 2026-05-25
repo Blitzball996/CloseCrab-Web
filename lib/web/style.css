@@ -438,3 +438,137 @@ body {
   font-weight: 500;
   letter-spacing: 0.2px;
 }
+
+/* Team View */
+#view-team {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.team-content {
+  padding: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.team-section {
+  margin-bottom: 24px;
+}
+.team-heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.team-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 20px;
+  font-size: 14px;
+}
+
+/* Leaderboard Table */
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.leaderboard thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+.leaderboard tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.leaderboard tbody tr:last-child {
+  border-bottom: none;
+}
+.leaderboard tbody tr:hover {
+  background: var(--surface2);
+}
+.leaderboard-row td {
+  padding: 12px;
+  font-size: 14px;
+}
+.leaderboard-me {
+  background: rgba(10, 132, 255, 0.08);
+}
+.leaderboard-me td {
+  color: var(--accent);
+  font-weight: 600;
+}
+.rank-cell {
+  width: 40px;
+  text-align: center;
+  font-size: 16px;
+}
+.name-cell {
+  font-weight: 500;
+}
+.score-cell {
+  font-family: 'SF Mono', monospace;
+  font-weight: 600;
+  color: var(--success);
+}
+.badge-cell {
+  font-size: 12px;
+}
+
+/* Achievement Badges */
+.achievement-badge {
+  display: inline-block;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--warning);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+/* Online Members List */
+.member-list {
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.member-item:last-child {
+  border-bottom: none;
+}
+.member-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+.member-name {
+  flex: 1;
+  font-weight: 500;
+}
+.member-you {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+}
+.member-me {
+  background: rgba(10, 132, 255, 0.06);
+}

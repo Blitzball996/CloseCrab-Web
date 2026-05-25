@@ -15,6 +15,7 @@
       <div class="nav-bar">
         <h1>CloseCrab</h1>
         <div id="server-status" class="badge badge-offline">Offline</div>
+        <button class="btn-icon" onclick="showView('team')" title="Team">&#x1F465;</button>
         <button class="btn-icon btn-danger" onclick="killCrabProcess()" title="Kill CloseCrab Process">&#x23FB;</button>
       </div>
       <div id="sessions-list" class="content sessions-content"></div>
@@ -81,8 +82,41 @@
         </div>
       </div>
     </div>
+    <!-- Team View -->
+    <div id="view-team" style="display:none;">
+      <div class="nav-bar">
+        <button class="btn-back" onclick="destroyTeamView();showView('sessions')">&larr;</button>
+        <h1>Team</h1>
+        <span class="badge badge-online"><span id="online-count">0</span> online</span>
+      </div>
+      <div class="content team-content">
+        <div class="team-section">
+          <h2 class="team-heading">Leaderboard</h2>
+          <table class="leaderboard">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Badges</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+              <tr><td colspan="4" class="team-empty">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="team-section">
+          <h2 class="team-heading">Online Members</h2>
+          <div id="member-list" class="member-list">
+            <div class="team-empty">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="games.js"></script>
+  <script src="team.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
