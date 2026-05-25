@@ -355,7 +355,7 @@ body {
 #btn-send:active { opacity: 0.7; }
 
 /* Views */
-#view-sessions, #view-new, #view-terminal {
+#view-dashboard, #view-sessions, #view-new, #view-terminal {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -571,4 +571,205 @@ body {
 }
 .member-me {
   background: rgba(10, 132, 255, 0.06);
+}
+
+/* === Dashboard View === */
+#view-dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 2px;
+}
+.nav-tab {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-tab.active {
+  background: var(--accent);
+  color: #fff;
+}
+.nav-tab:not(.active):active {
+  background: var(--border);
+}
+
+/* Dashboard Content */
+.dash-content {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* Status Card */
+.dash-status-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+}
+.dash-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.dash-status-info {
+  text-align: left;
+}
+.dash-status-title {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* Status Dot */
+.status-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.status-dot.status-running {
+  background: var(--success);
+  box-shadow: 0 0 20px rgba(48, 209, 88, 0.5), 0 0 40px rgba(48, 209, 88, 0.2);
+}
+.status-dot.status-stopped {
+  background: var(--danger);
+  box-shadow: 0 0 20px rgba(255, 69, 58, 0.4), 0 0 40px rgba(255, 69, 58, 0.15);
+}
+.status-dot.status-starting {
+  background: var(--warning);
+  box-shadow: 0 0 20px rgba(255, 214, 10, 0.5);
+  animation: pulse 1.2s infinite;
+}
+
+/* Status Label */
+.status-label {
+  font-size: 22px;
+  font-weight: 700;
+}
+.status-label.running { color: var(--success); }
+.status-label.stopped { color: var(--danger); }
+.status-label.starting { color: var(--warning); }
+
+/* Meta Info Row */
+.dash-meta {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.dash-meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.dash-meta-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.dash-meta-value {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'SF Mono', 'Menlo', monospace;
+  color: var(--text);
+}
+
+/* Dashboard Action Buttons */
+.dash-actions {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dash-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.dash-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.dash-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.dash-btn-icon {
+  font-size: 20px;
+}
+.dash-btn-start {
+  background: var(--success);
+  color: #000;
+}
+.dash-btn-stop {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.dash-btn-kill {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* Dashboard Hint */
+.dash-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Responsive: wider screens */
+@media (min-width: 600px) {
+  .dash-actions {
+    flex-direction: row;
+    max-width: 600px;
+  }
+  .dash-btn {
+    flex: 1;
+    padding: 20px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dash-btn-icon {
+    font-size: 28px;
+  }
+  .dash-status-card {
+    max-width: 500px;
+  }
 }

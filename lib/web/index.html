@@ -10,13 +10,69 @@
 </head>
 <body>
   <div id="app">
-    <!-- Sessions View -->
-    <div id="view-sessions">
+    <!-- Dashboard View (default landing page) -->
+    <div id="view-dashboard">
       <div class="nav-bar">
         <h1>CloseCrab</h1>
-        <div id="server-status" class="badge badge-offline">Offline</div>
-        <button class="btn-icon" onclick="showView('team')" title="Team">&#x1F465;</button>
-        <button class="btn-icon btn-danger" onclick="killCrabProcess()" title="Kill CloseCrab Process">&#x23FB;</button>
+        <div class="nav-tabs">
+          <button class="nav-tab active" onclick="showView('dashboard')">Dashboard</button>
+          <button class="nav-tab" onclick="showView('sessions')">Sessions</button>
+          <button class="nav-tab" onclick="showView('team')">Team</button>
+        </div>
+      </div>
+      <div class="content dash-content">
+        <div class="dash-status-card">
+          <div class="dash-status-row">
+            <div id="dash-status-dot" class="status-dot status-stopped"></div>
+            <div class="dash-status-info">
+              <div class="dash-status-title">Backend Status</div>
+              <div id="dash-status-label" class="status-label stopped">Checking...</div>
+            </div>
+          </div>
+          <div class="dash-meta">
+            <div class="dash-meta-item">
+              <span class="dash-meta-label">PID</span>
+              <span id="dash-pid" class="dash-meta-value">--</span>
+            </div>
+            <div class="dash-meta-item">
+              <span class="dash-meta-label">Uptime</span>
+              <span id="dash-uptime" class="dash-meta-value">--:--</span>
+            </div>
+            <div class="dash-meta-item">
+              <span class="dash-meta-label">Clients</span>
+              <span id="dash-clients" class="dash-meta-value">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-actions">
+          <button id="dash-btn-start" class="dash-btn dash-btn-start" onclick="startBackend()">
+            <span class="dash-btn-icon">&#x25B6;</span>
+            Start Backend
+          </button>
+          <button id="dash-btn-stop" class="dash-btn dash-btn-stop" onclick="stopBackend()" disabled>
+            <span class="dash-btn-icon">&#x25A0;</span>
+            Stop Backend
+          </button>
+          <button id="dash-btn-kill" class="dash-btn dash-btn-kill" onclick="killAllProcesses()">
+            <span class="dash-btn-icon">&#x2716;</span>
+            Kill All Processes
+          </button>
+        </div>
+
+        <p class="dash-hint">Status refreshes every 3 seconds automatically.</p>
+      </div>
+    </div>
+
+    <!-- Sessions View -->
+    <div id="view-sessions" style="display:none;">
+      <div class="nav-bar">
+        <h1>CloseCrab</h1>
+        <div class="nav-tabs">
+          <button class="nav-tab" onclick="showView('dashboard')">Dashboard</button>
+          <button class="nav-tab active" onclick="showView('sessions')">Sessions</button>
+          <button class="nav-tab" onclick="showView('team')">Team</button>
+        </div>
       </div>
       <div id="sessions-list" class="content sessions-content"></div>
       <div class="bottom-bar">
@@ -85,8 +141,12 @@
     <!-- Team View -->
     <div id="view-team" style="display:none;">
       <div class="nav-bar">
-        <button class="btn-back" onclick="destroyTeamView();showView('sessions')">&larr;</button>
-        <h1>Team</h1>
+        <h1>CloseCrab</h1>
+        <div class="nav-tabs">
+          <button class="nav-tab" onclick="destroyTeamView();showView('dashboard')">Dashboard</button>
+          <button class="nav-tab" onclick="destroyTeamView();showView('sessions')">Sessions</button>
+          <button class="nav-tab active" onclick="showView('team')">Team</button>
+        </div>
         <span class="badge badge-online"><span id="online-count">0</span> online</span>
       </div>
       <div class="content team-content">
@@ -116,6 +176,7 @@
     </div>
   </div>
   <script src="games.js"></script>
+  <script src="dashboard.js"></script>
   <script src="team.js"></script>
   <script src="app.js"></script>
 </body>
