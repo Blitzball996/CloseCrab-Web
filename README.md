@@ -17,6 +17,10 @@ Access your AI coding assistant from your phone, anywhere — via Tailscale, Zer
 
 ## Features
 
+- **Dashboard Control Panel** — Visual overview of all sessions, system metrics, and quick actions
+- **Team Mode** — Leaderboard, per-client routing, online member tracking (when backend Team Mode enabled)
+- **One-Click Launcher** — `start.bat` / `start.sh` double-click to launch + auto-open browser
+- **Process Termination** — Kill CloseCrab remotely via `/api/kill` endpoint
 - **9 Random Mini-Games** while waiting for CloseCrab to load (Snake, Tetris, Breakout, Tank Battle, Mario Run, 100 Floors, Bomberman, Road Racer, Mini DOOM)
 - **Inline Thinking Animation** — replaces the duplicated "Waiting for response..." spinner with a clean wave bar
 - **Touch-Optimized Terminal** — swipe, quick-key bar, mobile-friendly input
