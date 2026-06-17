@@ -741,6 +741,16 @@ body {
   background: var(--surface2);
   color: var(--text);
   border: 1px solid var(--border);
+  /* Smaller than the primary actions - secondary control, not a hero button. */
+  align-self: center;
+  width: auto;
+  min-width: 140px;
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+.dash-btn-stop .dash-btn-icon {
+  font-size: 14px;
 }
 .dash-btn-kill {
   background: var(--danger);
@@ -768,6 +778,16 @@ body {
   }
   .dash-btn-icon {
     font-size: 28px;
+  }
+  /* Keep Stop compact even on wide screens. */
+  .dash-btn-stop {
+    flex: 0 0 auto;
+    flex-direction: row;
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+  .dash-btn-stop .dash-btn-icon {
+    font-size: 14px;
   }
   .dash-status-card {
     max-width: 500px;
@@ -833,4 +853,11 @@ body {
   background: rgba(120,120,160,.15); color: #ccd;
   font-size: 12px; padding: 6px 10px; text-align: center;
   border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Disconnect button: neutral (not destructive) — only drops THIS phone. */
+.dash-btn-disconnect {
+  background: var(--surface, #2a2a32);
+  color: var(--text-secondary, #aab);
+  border: 1px solid rgba(255,255,255,.12);
 }
