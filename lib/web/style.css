@@ -773,3 +773,64 @@ body {
     max-width: 500px;
   }
 }
+
+/* ── License badge (dashboard) ───────────────────────────────────────── */
+.dash-license {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+.dash-license .dash-meta-value.lic-ok { color: var(--success); font-family: 'SF Mono', ui-monospace, monospace; }
+.dash-license .dash-meta-value.lic-bad { color: var(--danger); }
+
+/* ── Leaderboard scope tabs (Local / Global) ─────────────────────────── */
+.lb-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.lb-tab {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.lb-tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Cloud presence marker in the member list */
+.member-remote {
+  margin-left: auto;
+  color: var(--accent);
+  font-size: 13px;
+  opacity: .8;
+}
+
+
+/* === remote-session discovery additions === */
+.kind-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: .5px;
+  padding: 1px 6px; border-radius: 6px; margin-left: 6px; vertical-align: middle;
+}
+.kind-tag.live   { background: rgba(46,160,67,.18);  color: var(--success); }
+.kind-tag.mirror { background: rgba(120,120,130,.20); color: #aab; }
+.session-card.attached { border-left: 3px solid #7a7aa0; }
+.session-card .msg-count { opacity: .6; font-size: 11px; margin-left: 6px; }
+.mirror-banner {
+  background: rgba(120,120,160,.15); color: #ccd;
+  font-size: 12px; padding: 6px 10px; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}

@@ -43,6 +43,10 @@
               <span id="dash-clients" class="dash-meta-value">0</span>
             </div>
           </div>
+          <div class="dash-license" id="dash-license">
+            <span class="dash-meta-label">License</span>
+            <span id="dash-license-val" class="dash-meta-value">checking…</span>
+          </div>
         </div>
 
         <div class="dash-actions">
@@ -152,6 +156,10 @@
       <div class="content team-content">
         <div class="team-section">
           <h2 class="team-heading">Leaderboard</h2>
+          <div class="lb-tabs">
+            <button class="lb-tab active" data-scope="local" onclick="setLeaderboardScope('local')">This PC</button>
+            <button class="lb-tab" data-scope="cloud" onclick="setLeaderboardScope('cloud')" style="display:none">☁ Global</button>
+          </div>
           <table class="leaderboard">
             <thead>
               <tr>
