@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node bin/cli.js",
-    "dev": "node bin/cli.js --port 3000"
+    "dev": "node bin/cli.js --port 3000",
+    "test": "node desktop-test.cjs && node shared-server-test.cjs && node connection-test.cjs && node spinner-test.cjs"
   },
   "keywords": ["closecrab", "remote-control", "terminal", "web-ui", "ai-coding"],
   "author": "Blitzball996",
@@ -21,11 +22,14 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "express": "^5.2.1",
-    "ws": "^8.19.0",
-    "node-pty": "npm:@lydell/node-pty@^1.1.0",
     "commander": "^11.0.0",
+    "dompurify": "^3.4.17",
+    "express": "^5.2.1",
+    "lucide": "^0.468.0",
+    "marked": "^15.0.12",
+    "node-pty": "npm:@lydell/node-pty@^1.1.0",
     "uuid": "^9.0.0",
+    "ws": "^8.19.0",
     "yaml": "^2.3.4"
   }
 }

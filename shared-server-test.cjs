@@ -9,7 +9,7 @@ const {WebSocket,WebSocketServer}=require('ws');
  const upstream=new WebSocketServer({port:0,host:'127.0.0.1'});await once(upstream,'listening');
  const reservation=createServer();await new Promise(r=>reservation.listen(0,'127.0.0.1',r));
  const port=reservation.address().port;await new Promise(r=>reservation.close(r));
- let core,wakes=0,seq=0;
+ let core,wakes=0,seq=0,created=false;
  upstream.on('connection',socket=>{core=socket;socket.on('message',raw=>{
   const event=JSON.parse(raw);
   if(event.type==='auth'){assert.equal(event.token,'core-secret');socket.send(JSON.stringify({type:'connected',ready:true,oldest:1}));}
@@ -25,6 +25,12 @@ const {WebSocket,WebSocketServer}=require('ws');
  createInterface({input:child.stdout}).on('line',line=>{
   let event;try{event=JSON.parse(line);}catch{return;}
   if(event.studioWake==='wake-secret'){
+   if(event.operation==='list'||event.operation==='create'){
+    if(event.operation==='create')created=true;
+    const sessions=[{id:'shared-test',title:'First',workingDirectory:__dirname,port:upstream.address().port,token:'core-secret'}];
+    if(created)sessions.push({...sessions[0],id:'created-test',title:'New'});
+    child.stdin.write(JSON.stringify({requestId:event.requestId,ok:true,data:{sessions,createdId:created?'created-test':undefined}})+'\n');return;
+   }
    wakes++;child.stdin.write(JSON.stringify({requestId:event.requestId,ok:true})+'\n');
    core.send(JSON.stringify({type:'user',seq:++seq,content:'phone prompt'}));
    core.send(JSON.stringify({type:'text',seq:++seq,content:'shared answer'}));
@@ -55,6 +61,47 @@ const {WebSocket,WebSocketServer}=require('ws');
   await until(()=>events.some(e=>e.type==='agent_event'&&e.event.type==='choice'));
   const answer=once(core,'message');phone.send(JSON.stringify({type:'answer',requestId:'approval',index:1}));
   assert.equal(JSON.parse((await answer)[0]).index,1);
+  const createdSession=await (await fetch(base+'/api/sessions',{headers,method:'POST',body:'{}'})).json();
+  assert.equal(createdSession.id,'created-test');
+  const updated=await (await fetch(base+'/api/sessions',{headers})).json();
+  assert.equal(updated.length,2);assert(!JSON.stringify(updated).includes('core-secret'));
+  assert(updated.every(s=>s.port===undefined&&s.token===undefined));
+  if(process.argv.includes('--ui')){
+   const {chromium}=require('../CloseCrab-Desktop/node_modules/@playwright/test');
+   const browser=await chromium.launch({channel:'msedge',headless:true});
+   try{
+    const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.goto(base+'/?token=phone-secret');
+    await page.locator('.message.assistant').filter({hasText:'shared answer'}).waitFor();
+    await page.locator('.brand-image').evaluate(img=>img.decode());
+    await page.locator('#draft').fill('keep this draft');
+    await page.locator('#sessions-button').click();
+    await page.locator('.session-item').filter({hasText:'New'}).click();
+    assert.equal(await page.locator('#draft').inputValue(),'');
+    await page.locator('#sessions-button').click();
+    await page.locator('.session-item').filter({hasText:'First'}).click();
+    assert.equal(await page.locator('#draft').inputValue(),'keep this draft');
+    await page.locator('.message.assistant').filter({hasText:'shared answer'}).waitFor();
+    assert.equal(await page.locator('.message.assistant').count(),1);
+    for(const theme of ['paper','studio']){
+     if(theme==='studio')await page.locator('#theme').click();
+     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+     await page.screenshot({path:'../CloseCrab-Desktop/artifacts/mobile-'+theme+'.png'});
+    }
+    await page.locator('#language').selectOption('en');
+    assert.equal(await page.locator('#draft').getAttribute('placeholder'),'Message CloseCrab…');
+    await page.setViewportSize({width:320,height:568});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+    const composer=await page.locator('#composer').boundingBox();
+    assert(composer.y>=0&&composer.y+composer.height<=568);
+    await page.screenshot({path:'../CloseCrab-Desktop/artifacts/mobile-small.png'});
+    await page.setViewportSize({width:1280,height:900});
+    await page.screenshot({path:'../CloseCrab-Desktop/artifacts/mobile-wide.png'});
+    assert.deepEqual(errors,[]);
+    console.log('PASS: mobile themes, assets, language, conversation switching, draft retention, snapshot deduplication and responsive layout');
+   }finally{await browser.close();}
+  }
   console.log('PASS: authenticated shared HTTP/WebSocket service, protected deletion, phone prompt wake, shared response/ready and approval relay');
  }finally{
   phone?.terminate();child.kill();await once(child,'exit');
