@@ -14,5 +14,5 @@ patch_*.py
 .closecrab-web-license.json
 
 # Stray file accidentally created by shell redirection
-{
+\{
 
