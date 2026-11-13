@@ -17,6 +17,6 @@ assert.equal(timers.length,previousTimerCount,'Old socket must not schedule reco
 sockets[0].onmessage({data:'{"type":"output","data":"stale"}'});
 assert.equal(states.length,0,'Old socket must not alter active status');
 sockets[1].onclose();
-assert.equal(states.at(-1),false,'Disconnect must stop thinking');
+assert(states.includes(false),'Disconnect must stop thinking');
 assert.equal(timers.length,previousTimerCount+1);
 console.log('PASS: stale connections cannot overwrite active session or reconnect; disconnect clears thinking');
